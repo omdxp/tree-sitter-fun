@@ -16,7 +16,7 @@
     "version": "0.1.0",
     "license": "MIT",
     "description": "Tree-sitter grammar for the Fun programming language",
-    "authors": [{ "name": "Omar" }],
+    "authors": [{ "name": "omdxp" }],
     "links": { "repository": "https://github.com/omdxp/tree-sitter-fun" }
   }
 }
