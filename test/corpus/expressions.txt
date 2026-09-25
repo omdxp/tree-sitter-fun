@@ -1,0 +1,215 @@
+========================================
+propagation
+========================================
+
+fun main() {
+  num a = half(x)?;
+  num b = parse(x)!;
+  num c = find(x)?!(.NotFound);
+  num d = parse(x)!?;
+}
+
+----------------------------------------
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (block
+      (variable_declaration
+        (primitive_type)
+        (identifier)
+        (propagate_expression
+          (call_expression
+            (identifier)
+            (arguments
+              (identifier)))))
+      (variable_declaration
+        (primitive_type)
+        (identifier)
+        (propagate_expression
+          (call_expression
+            (identifier)
+            (arguments
+              (identifier)))))
+      (variable_declaration
+        (primitive_type)
+        (identifier)
+        (propagate_expression
+          (call_expression
+            (identifier)
+            (arguments
+              (identifier)))
+          (enum_shorthand_expression
+            (identifier))))
+      (variable_declaration
+        (primitive_type)
+        (identifier)
+        (propagate_expression
+          (call_expression
+            (identifier)
+            (arguments
+              (identifier))))))))
+
+========================================
+concurrency
+========================================
+
+fun main() {
+  fork work(&ch);
+  ch <- 1;
+  let v = <-ch;
+  let r = await job();
+}
+
+----------------------------------------
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (block
+      (expression_statement
+        (fork_expression
+          (call_expression
+            (identifier)
+            (arguments
+              (unary_expression
+                (identifier))))))
+      (expression_statement
+        (send_expression
+          (identifier)
+          (number_literal)))
+      (let_declaration
+        (identifier)
+        (receive_expression
+          (identifier)))
+      (let_declaration
+        (identifier)
+        (await_expression
+          (call_expression
+            (identifier)
+            (arguments)))))))
+
+========================================
+literals
+========================================
+
+fun main() {
+  let a = 0xFF;
+  let b = 3.5;
+  let c = 'z';
+  let d = "hi\n";
+  let e = `raw \ string`;
+  let f = [1, 2, 3];
+  let g = (1, "x");
+  let h = t.0.1;
+}
+
+----------------------------------------
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (block
+      (let_declaration
+        (identifier)
+        (number_literal))
+      (let_declaration
+        (identifier)
+        (number_literal))
+      (let_declaration
+        (identifier)
+        (char_literal))
+      (let_declaration
+        (identifier)
+        (string_literal
+          (string_content)
+          (escape_sequence)))
+      (let_declaration
+        (identifier)
+        (raw_string_literal))
+      (let_declaration
+        (identifier)
+        (array_expression
+          (number_literal)
+          (number_literal)
+          (number_literal)))
+      (let_declaration
+        (identifier)
+        (tuple_expression
+          (number_literal)
+          (string_literal
+            (string_content))))
+      (let_declaration
+        (identifier)
+        (field_expression
+          (field_expression
+            (identifier)
+            (tuple_index))
+          (tuple_index))))))
+
+========================================
+compound init
+========================================
+
+fun main() {
+  Point p = Point{x = 1, y = 2};
+  Ops o = .{op = add};
+  Shape s = .Circle(5);
+  Pair<num, str> q = Pair<num, str>{a = 1, b = "x"};
+}
+
+----------------------------------------
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (block
+      (variable_declaration
+        (type_identifier)
+        (identifier)
+        (compound_expression
+          (type_identifier)
+          (field_initializer
+            (identifier)
+            (number_literal))
+          (field_initializer
+            (identifier)
+            (number_literal))))
+      (variable_declaration
+        (type_identifier)
+        (identifier)
+        (compound_expression
+          (field_initializer
+            (identifier)
+            (identifier))))
+      (variable_declaration
+        (type_identifier)
+        (identifier)
+        (enum_shorthand_expression
+          (identifier)
+          (arguments
+            (number_literal))))
+      (variable_declaration
+        (generic_type
+          (type_identifier)
+          (type_arguments
+            (primitive_type)
+            (primitive_type)))
+        (identifier)
+        (compound_expression
+          (generic_type
+            (type_identifier)
+            (type_arguments
+              (primitive_type)
+              (primitive_type)))
+          (field_initializer
+            (identifier)
+            (number_literal))
+          (field_initializer
+            (identifier)
+            (string_literal
+              (string_content))))))))

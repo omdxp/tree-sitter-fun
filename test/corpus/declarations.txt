@@ -1,0 +1,192 @@
+========================================
+use and function
+========================================
+
+use std.io;
+use ..foo.bar as fb;
+
+pub fun add(num a, num b) num {
+  ret a + b;
+}
+
+----------------------------------------
+
+(source_file
+  (use_declaration
+    (module_path
+      (module)
+      (module)))
+  (use_declaration
+    (module_path
+      (module)
+      (module))
+    (identifier))
+  (function_declaration
+    (visibility)
+    (identifier)
+    (parameters
+      (parameter
+        (primitive_type)
+        (identifier))
+      (parameter
+        (primitive_type)
+        (identifier)))
+    (primitive_type)
+    (block
+      (return_statement
+        (binary_expression
+          (identifier)
+          (identifier))))))
+
+========================================
+compound and enum
+========================================
+
+compound Point<T> {
+  T x;
+  T y;
+}
+
+enum Shape {
+  Circle(num),
+  Rect(num, num),
+  Empty,
+}
+
+----------------------------------------
+
+(source_file
+  (compound_declaration
+    (type_identifier)
+    (type_parameters
+      (type_parameter
+        (type_identifier)))
+    (field_list
+      (field_declaration
+        (type_identifier)
+        (identifier))
+      (field_declaration
+        (type_identifier)
+        (identifier))))
+  (enum_declaration
+    (type_identifier)
+    (enum_body
+      (enum_variant
+        (identifier)
+        (primitive_type))
+      (enum_variant
+        (identifier)
+        (primitive_type)
+        (primitive_type))
+      (enum_variant
+        (identifier)))))
+
+========================================
+quirk and impl
+========================================
+
+quirk Shape {
+  area() num;
+}
+
+impl Square as Shape {
+  area() num { ret self.side * self.side; }
+}
+
+----------------------------------------
+
+(source_file
+  (quirk_declaration
+    (type_identifier)
+    (quirk_body
+      (method_declaration
+        (identifier)
+        (parameters)
+        (primitive_type))))
+  (impl_declaration
+    (impl_type
+      (type_identifier))
+    (type_identifier)
+    (impl_body
+      (method_declaration
+        (identifier)
+        (parameters)
+        (primitive_type)
+        (block
+          (return_statement
+            (binary_expression
+              (field_expression
+                (identifier)
+                (identifier))
+              (field_expression
+                (identifier)
+                (identifier)))))))))
+
+========================================
+alias
+========================================
+
+als Numeric = num | dec;
+als Callback<A, R> = fun(A) R;
+
+----------------------------------------
+
+(source_file
+  (alias_declaration
+    (type_identifier)
+    (primitive_type)
+    (primitive_type))
+  (alias_declaration
+    (type_identifier)
+    (type_parameters
+      (type_parameter
+        (type_identifier))
+      (type_parameter
+        (type_identifier)))
+    (function_type
+      (type_identifier)
+      (type_identifier))))
+
+========================================
+test and fuzz
+========================================
+
+test "adds" {
+  assert 1 + 1 == 2, "math";
+}
+
+sequential test "later" { }
+
+fuzz "never crashes" (raw* data, num len) { }
+
+----------------------------------------
+
+(source_file
+  (test_declaration
+    (string_literal
+      (string_content))
+    (block
+      (assert_statement
+        (binary_expression
+          (binary_expression
+            (number_literal)
+            (number_literal))
+          (number_literal))
+        (string_literal
+          (string_content)))))
+  (test_declaration
+    (string_literal
+      (string_content))
+    (block))
+  (fuzz_declaration
+    (string_literal
+      (string_content))
+    (parameters
+      (parameter
+        (pointer_type
+          (primitive_type))
+        (identifier))
+      (parameter
+        (primitive_type)
+        (identifier)))
+    (block)))

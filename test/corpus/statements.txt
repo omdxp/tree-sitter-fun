@@ -1,0 +1,201 @@
+========================================
+declarations and let
+========================================
+
+fun main() {
+  num x = 1;
+  Vec<Vec<num>> rows;
+  num* p = nil;
+  let n = 42;
+  const MAX = 10;
+  let (a, b) = pair();
+}
+
+----------------------------------------
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (block
+      (variable_declaration
+        (primitive_type)
+        (identifier)
+        (number_literal))
+      (variable_declaration
+        (generic_type
+          (type_identifier)
+          (type_arguments
+            (generic_type
+              (type_identifier)
+              (type_arguments
+                (primitive_type)))))
+        (identifier))
+      (variable_declaration
+        (pointer_type
+          (primitive_type))
+        (identifier)
+        (nil_literal))
+      (let_declaration
+        (identifier)
+        (number_literal))
+      (const_declaration
+        (identifier)
+        (number_literal))
+      (destructure_declaration
+        (destructure_names
+          (identifier)
+          (identifier))
+        (call_expression
+          (identifier)
+          (arguments))))))
+
+========================================
+control flow
+========================================
+
+fun main() {
+  if x > 0 { ret; } elif x == 0 { ret; } else { ret; }
+  if (w < 0) w = -w;
+  for i < 10 { i += 1; }
+  for item : items { }
+  for i, item :: items { }
+  for (a, b) : pairs { }
+}
+
+----------------------------------------
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (block
+      (if_statement
+        (binary_expression
+          (identifier)
+          (number_literal))
+        (block
+          (return_statement))
+        (elif_clause
+          (binary_expression
+            (identifier)
+            (number_literal))
+          (block
+            (return_statement)))
+        (else_clause
+          (block
+            (return_statement))))
+      (if_statement
+        (parenthesized_expression
+          (binary_expression
+            (identifier)
+            (number_literal)))
+        (expression_statement
+          (assignment_expression
+            (identifier)
+            (unary_expression
+              (identifier)))))
+      (for_statement
+        (binary_expression
+          (identifier)
+          (number_literal))
+        (block
+          (expression_statement
+            (assignment_expression
+              (identifier)
+              (number_literal)))))
+      (for_statement
+        (identifier)
+        (identifier)
+        (block))
+      (for_statement
+        (identifier)
+        (identifier)
+        (identifier)
+        (block))
+      (for_statement
+        (destructure_names
+          (identifier)
+          (identifier))
+        (identifier)
+        (block)))))
+
+========================================
+fit
+========================================
+
+fun main() {
+  fit s {
+    .Circle(r), .Rect(w, h) -> { ret r; }
+    Color.Red -> { ret 1; }
+    _ -> { }
+  }
+}
+
+----------------------------------------
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (block
+      (fit_statement
+        (identifier)
+        (fit_arm
+          (call_expression
+            (enum_shorthand_expression
+              (identifier))
+            (arguments
+              (identifier)))
+          (call_expression
+            (enum_shorthand_expression
+              (identifier))
+            (arguments
+              (identifier)
+              (identifier)))
+          (block
+            (return_statement
+              (identifier))))
+        (fit_arm
+          (variant_pattern
+            (identifier)
+            (identifier))
+          (block
+            (return_statement
+              (number_literal))))
+        (fit_arm
+          (wildcard_pattern)
+          (block))))))
+
+========================================
+defer and warnings
+========================================
+
+fun main() {
+  defer close(fd);
+  defer { cleanup(); }
+  allow unused_variables, "scaffolding";
+}
+
+----------------------------------------
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (block
+      (defer_statement
+        (call_expression
+          (identifier)
+          (arguments
+            (identifier))))
+      (defer_statement
+        (block
+          (expression_statement
+            (call_expression
+              (identifier)
+              (arguments)))))
+      (warning_control
+        (identifier)
+        (string_literal
+          (string_content))))))
