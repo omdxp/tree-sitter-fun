@@ -1,0 +1,15 @@
+{
+  "name": "tree-sitter-fun",
+  "version": "0.1.0",
+  "description": "Tree-sitter grammar for the Fun programming language",
+  "license": "MIT",
+  "main": "bindings/node",
+  "keywords": ["parser", "tree-sitter", "fun"],
+  "repository": "github:omdxp/tree-sitter-fun",
+  "files": ["grammar.js", "queries", "src"],
+  "devDependencies": {},
+  "scripts": {
+    "generate": "tree-sitter generate",
+    "test": "tree-sitter test"
+  }
+}

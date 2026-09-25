@@ -1,0 +1,22 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "fun",
+      "camelcase": "Fun",
+      "title": "Fun",
+      "scope": "source.fun",
+      "file-types": ["fn"],
+      "highlights": "queries/highlights.scm",
+      "injections": "queries/injections.scm",
+      "class-name": "TreeSitterFun"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "Tree-sitter grammar for the Fun programming language",
+    "authors": [{ "name": "Omar" }],
+    "links": { "repository": "https://github.com/omdxp/tree-sitter-fun" }
+  }
+}
