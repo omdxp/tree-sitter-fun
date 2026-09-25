@@ -1,6 +1,3 @@
-; Least specific first: later patterns override earlier ones.
-(identifier) @variable
-
 (comment) @comment
 
 ; Keywords
@@ -78,6 +75,7 @@
 ((identifier) @constant
   (#match? @constant "^[A-Z][A-Z0-9_]+$"))
 
+(identifier) @variable
 
 ; Literals
 (number_literal) @number
