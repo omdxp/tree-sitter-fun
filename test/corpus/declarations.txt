@@ -82,23 +82,23 @@ enum Shape {
         (identifier)))))
 
 ========================================
-quirk and impl
+shape and impl
 ========================================
 
-quirk Shape {
+shape HasArea {
   area() num;
 }
 
-impl Square as Shape {
+impl Square as HasArea {
   area() num { ret self.side * self.side; }
 }
 
 ----------------------------------------
 
 (source_file
-  (quirk_declaration
+  (shape_declaration
     (type_identifier)
-    (quirk_body
+    (shape_body
       (method_declaration
         (identifier)
         (parameters)
