@@ -88,7 +88,7 @@ module.exports = grammar({
         $.function_declaration,
         $.compound_declaration,
         $.enum_declaration,
-        $.quirk_declaration,
+        $.shape_declaration,
         $.impl_declaration,
         $.alias_declaration,
         $.test_declaration,
@@ -203,23 +203,23 @@ module.exports = grammar({
         optional(seq("=", field("value", $._expression))),
       ),
 
-    quirk_declaration: ($) =>
+    shape_declaration: ($) =>
       seq(
         optional($.visibility),
-        "quirk",
+        "shape",
         field("name", alias($.identifier, $.type_identifier)),
         optional(field("type_parameters", $.type_parameters)),
-        field("body", $.quirk_body),
+        field("body", $.shape_body),
       ),
 
-    quirk_body: ($) => seq("{", repeat($.method_declaration), "}"),
+    shape_body: ($) => seq("{", repeat($.method_declaration), "}"),
 
     impl_declaration: ($) =>
       seq(
         optional($.visibility),
         "impl",
         field("type", $.impl_type),
-        optional(seq("as", field("quirk", $._type))),
+        optional(seq("as", field("shape", $._type))),
         field("body", $.impl_body),
       ),
 
