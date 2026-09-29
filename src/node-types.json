@@ -28,7 +28,7 @@
         "named": true
       },
       {
-        "type": "quirk_declaration",
+        "type": "shape_declaration",
         "named": true
       },
       {
@@ -1582,7 +1582,7 @@
           }
         ]
       },
-      "quirk": {
+      "shape": {
         "multiple": false,
         "required": false,
         "types": [
@@ -1933,67 +1933,6 @@
     }
   },
   {
-    "type": "quirk_body",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "method_declaration",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "quirk_declaration",
-    "named": true,
-    "fields": {
-      "body": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "quirk_body",
-            "named": true
-          }
-        ]
-      },
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "type_identifier",
-            "named": true
-          }
-        ]
-      },
-      "type_parameters": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "type_parameters",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "visibility",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "receive_expression",
     "named": true,
     "fields": {},
@@ -2047,6 +1986,67 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "shape_body",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "method_declaration",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "shape_declaration",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "shape_body",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "type_identifier",
+            "named": true
+          }
+        ]
+      },
+      "type_parameters": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "type_parameters",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "visibility",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -2731,10 +2731,6 @@
     "named": true
   },
   {
-    "type": "quirk",
-    "named": false
-  },
-  {
     "type": "raw_string_literal",
     "named": true
   },
@@ -2744,6 +2740,10 @@
   },
   {
     "type": "sequential",
+    "named": false
+  },
+  {
+    "type": "shape",
     "named": false
   },
   {
