@@ -74,6 +74,10 @@
         "named": true
       },
       {
+        "type": "closure_expression",
+        "named": true
+      },
+      {
         "type": "compound_expression",
         "named": true
       },
@@ -231,6 +235,10 @@
     "subtypes": [
       {
         "type": "array_type",
+        "named": true
+      },
+      {
+        "type": "closure_type",
         "named": true
       },
       {
@@ -688,6 +696,48 @@
         "types": [
           {
             "type": "_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "closure_expression",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "block",
+            "named": true
+          }
+        ]
+      },
+      "return_type": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "_type",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "closure_type",
+    "named": true,
+    "fields": {
+      "return_type": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "_type",
             "named": true
           }
         ]
@@ -2619,6 +2669,10 @@
   },
   {
     "type": "clobber",
+    "named": false
+  },
+  {
+    "type": "closure",
     "named": false
   },
   {

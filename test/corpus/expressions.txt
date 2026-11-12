@@ -213,3 +213,48 @@ fun main() {
             (identifier)
             (string_literal
               (string_content))))))))
+
+========================================
+closures
+========================================
+
+fun main() {
+  RuntimeAsyncTask task = spawn(fun() {
+    hp.fetch_add(1);
+  });
+  closure() num c = fun() num {
+    ret 42;
+  };
+}
+
+----------------------------------------
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (block
+      (variable_declaration
+        (type_identifier)
+        (identifier)
+        (call_expression
+          (identifier)
+          (arguments
+            (closure_expression
+              (block
+                (expression_statement
+                  (call_expression
+                    (field_expression
+                      (identifier)
+                      (identifier))
+                    (arguments
+                      (number_literal)))))))))
+      (variable_declaration
+        (closure_type
+          (primitive_type))
+        (identifier)
+        (closure_expression
+          (primitive_type)
+          (block
+            (return_statement
+              (number_literal))))))))

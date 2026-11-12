@@ -270,6 +270,7 @@ module.exports = grammar({
         $.array_type,
         $.tuple_type,
         $.function_type,
+        $.closure_type,
       ),
 
     primitive_type: () =>
@@ -322,6 +323,16 @@ module.exports = grammar({
           "fun",
           "(",
           commaSep($._type),
+          ")",
+          optional(field("return_type", $._type)),
+        ),
+      ),
+
+    closure_type: ($) =>
+      prec.right(
+        seq(
+          "closure",
+          "(",
           ")",
           optional(field("return_type", $._type)),
         ),
@@ -575,6 +586,7 @@ module.exports = grammar({
         $.await_expression,
         $.fork_expression,
         $.receive_expression,
+        $.closure_expression,
       ),
 
     number_literal: () =>
@@ -715,6 +727,15 @@ module.exports = grammar({
             field("arguments", $.arguments),
           ),
         ),
+      ),
+
+    closure_expression: ($) =>
+      seq(
+        "fun",
+        "(",
+        ")",
+        optional(field("return_type", $._type)),
+        field("body", $.block),
       ),
 
     arguments: ($) =>

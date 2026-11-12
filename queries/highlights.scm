@@ -4,6 +4,7 @@
 [
   "use"
   "fun"
+  "closure"
   "als"
   "as"
   "impl"
