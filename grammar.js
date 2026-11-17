@@ -3,20 +3,21 @@
 
 const PREC = {
   assign: 1,
-  range: 2,
-  or: 3,
-  and: 4,
-  bit_or: 5,
-  bit_xor: 6,
-  bit_and: 7,
-  equal: 8,
-  compare: 9,
-  shift: 10,
-  add: 11,
-  mul: 12,
-  unary: 13,
-  postfix: 14,
-  call: 15,
+  ternary: 2,
+  range: 3,
+  or: 4,
+  and: 5,
+  bit_or: 6,
+  bit_xor: 7,
+  bit_and: 8,
+  equal: 9,
+  compare: 10,
+  shift: 11,
+  add: 12,
+  mul: 13,
+  unary: 14,
+  postfix: 15,
+  call: 16,
 };
 
 const sep1 = (rule, sep) => seq(rule, repeat(seq(sep, rule)));
@@ -27,6 +28,11 @@ module.exports = grammar({
   name: "fun",
 
   extras: ($) => [/\s/, $.comment],
+
+  // A ternary `?` is told apart from the postfix propagation `?` by the
+  // external scanner (src/scanner.c), the same depth-0 lookahead for a
+  // `:` the compiler's own parser uses.
+  externals: ($) => [$._ternary_question],
 
   word: ($) => $.identifier,
 
@@ -575,6 +581,7 @@ module.exports = grammar({
         $.compound_expression,
         $.unary_expression,
         $.binary_expression,
+        $.ternary_expression,
         $.assignment_expression,
         $.send_expression,
         $.call_expression,
@@ -582,6 +589,7 @@ module.exports = grammar({
         $.field_expression,
         $.index_expression,
         $.propagate_expression,
+        $.update_expression,
         $.sizeof_expression,
         $.await_expression,
         $.fork_expression,
@@ -691,6 +699,21 @@ module.exports = grammar({
       );
     },
 
+    // `cond ? then : else`, right-associative (`a ? b : c ? d : e` reads
+    // as `a ? b : (c ? d : e)`), binding looser than `||` and tighter
+    // than assignment, the same as the compiler's own parser.
+    ternary_expression: ($) =>
+      prec.right(
+        PREC.ternary,
+        seq(
+          field("condition", $._expression),
+          alias($._ternary_question, "?"),
+          field("consequence", $._expression),
+          ":",
+          field("alternative", $._expression),
+        ),
+      ),
+
     assignment_expression: ($) =>
       prec.right(
         PREC.assign,
@@ -758,6 +781,10 @@ module.exports = grammar({
         PREC.postfix,
         seq(field("value", $._expression), "[", field("index", $._expression), "]"),
       ),
+
+    // Postfix `i++`/`i--` (the prefix forms are ordinary unary operators).
+    update_expression: ($) =>
+      prec(PREC.postfix, seq(field("argument", $._expression), choice("++", "--"))),
 
     propagate_expression: ($) =>
       prec(

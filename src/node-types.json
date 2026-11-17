@@ -142,11 +142,19 @@
         "named": true
       },
       {
+        "type": "ternary_expression",
+        "named": true
+      },
+      {
         "type": "tuple_expression",
         "named": true
       },
       {
         "type": "unary_expression",
+        "named": true
+      },
+      {
+        "type": "update_expression",
         "named": true
       }
     ]
@@ -2154,6 +2162,42 @@
     }
   },
   {
+    "type": "ternary_expression",
+    "named": true,
+    "fields": {
+      "alternative": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_expression",
+            "named": true
+          }
+        ]
+      },
+      "condition": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_expression",
+            "named": true
+          }
+        ]
+      },
+      "consequence": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "test_declaration",
     "named": true,
     "fields": {
@@ -2294,6 +2338,22 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "update_expression",
+    "named": true,
+    "fields": {
+      "argument": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_expression",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {

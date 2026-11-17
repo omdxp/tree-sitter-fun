@@ -258,3 +258,97 @@ fun main() {
           (block
             (return_statement
               (number_literal))))))))
+
+==================
+ternary
+==================
+
+fun main() {
+  f ? print_fmt("a") : print_fmt("b");
+  str s = x > 10 ? "big" : x > 0 ? "small" : "neg";
+  let r = ok ? -1 : 1;
+  let v = a?.b?;
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    parameters: (parameters)
+    body: (block
+      (expression_statement
+        (ternary_expression
+          condition: (identifier)
+          consequence: (call_expression
+            function: (identifier)
+            arguments: (arguments
+              (string_literal
+                (string_content))))
+          alternative: (call_expression
+            function: (identifier)
+            arguments: (arguments
+              (string_literal
+                (string_content))))))
+      (variable_declaration
+        type: (primitive_type)
+        name: (identifier)
+        value: (ternary_expression
+          condition: (binary_expression
+            left: (identifier)
+            right: (number_literal))
+          consequence: (string_literal
+            (string_content))
+          alternative: (ternary_expression
+            condition: (binary_expression
+              left: (identifier)
+              right: (number_literal))
+            consequence: (string_literal
+              (string_content))
+            alternative: (string_literal
+              (string_content)))))
+      (let_declaration
+        name: (identifier)
+        value: (ternary_expression
+          condition: (identifier)
+          consequence: (unary_expression
+            (number_literal))
+          alternative: (number_literal)))
+      (let_declaration
+        name: (identifier)
+        value: (propagate_expression
+          value: (field_expression
+            value: (propagate_expression
+              value: (identifier))
+            field: (identifier)))))))
+
+==================
+increment and decrement
+==================
+
+fun main() {
+  i++;
+  ++i;
+  i--;
+  --i;
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    parameters: (parameters)
+    body: (block
+      (expression_statement
+        (update_expression
+          argument: (identifier)))
+      (expression_statement
+        (unary_expression
+          (identifier)))
+      (expression_statement
+        (update_expression
+          argument: (identifier)))
+      (expression_statement
+        (unary_expression
+          (identifier))))))
