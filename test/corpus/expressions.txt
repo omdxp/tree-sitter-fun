@@ -352,3 +352,52 @@ fun main() {
       (expression_statement
         (unary_expression
           (identifier))))))
+
+================================================================================
+Conversions with as
+================================================================================
+
+fun f() num {
+  let i = p.x as i32 * 2;
+  u64 a = &p as u64;
+  let q = a as P*;
+  ret (n + 1) as num;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    parameters: (parameters)
+    return_type: (primitive_type)
+    body: (block
+      (let_declaration
+        name: (identifier)
+        value: (binary_expression
+          left: (cast_expression
+            value: (field_expression
+              value: (identifier)
+              field: (identifier))
+            type: (type_identifier))
+          right: (number_literal)))
+      (variable_declaration
+        type: (type_identifier)
+        name: (identifier)
+        value: (cast_expression
+          value: (unary_expression
+            (identifier))
+          type: (type_identifier)))
+      (let_declaration
+        name: (identifier)
+        value: (cast_expression
+          value: (identifier)
+          type: (pointer_type
+            (type_identifier))))
+      (return_statement
+        (cast_expression
+          value: (parenthesized_expression
+            (binary_expression
+              left: (identifier)
+              right: (number_literal)))
+          type: (primitive_type))))))

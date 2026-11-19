@@ -15,9 +15,10 @@ const PREC = {
   shift: 11,
   add: 12,
   mul: 13,
-  unary: 14,
-  postfix: 15,
-  call: 16,
+  cast: 14,
+  unary: 15,
+  postfix: 16,
+  call: 17,
 };
 
 const sep1 = (rule, sep) => seq(rule, repeat(seq(sep, rule)));
@@ -64,6 +65,9 @@ module.exports = grammar({
     [$.generic_type, $.generic_call_expression],
     [$.generic_type, $.compound_expression],
     [$.pointer_type, $.binary_expression],
+    [$._type_name, $.qualified_type],
+    [$.pointer_type, $.cast_expression],
+    [$._type, $.generic_type],
     [$.array_type, $.index_expression],
     [$.tuple_type, $.tuple_expression],
     [$.tuple_type, $.parenthesized_expression],
@@ -314,7 +318,7 @@ module.exports = grammar({
 
     type_arguments: ($) => seq("<", commaSep1($._type), ">"),
 
-    pointer_type: ($) => prec.left(seq($._type, "*")),
+    pointer_type: ($) => prec(PREC.cast, seq($._type, "*")),
 
     array_type: ($) =>
       prec.left(
@@ -581,6 +585,7 @@ module.exports = grammar({
         $.compound_expression,
         $.unary_expression,
         $.binary_expression,
+        $.cast_expression,
         $.ternary_expression,
         $.assignment_expression,
         $.send_expression,
@@ -663,6 +668,14 @@ module.exports = grammar({
       prec(
         PREC.unary,
         seq(choice("-", "!", "~", "&", "*", "++", "--"), $._expression),
+      ),
+
+    // `value as T`: binds tighter than any binary operator, looser than a
+    // prefix one (`&p as u64` converts `&p`).
+    cast_expression: ($) =>
+      prec(
+        PREC.cast,
+        seq(field("value", $._expression), "as", field("type", $._type)),
       ),
 
     await_expression: ($) => prec(PREC.unary, seq("await", $._expression)),

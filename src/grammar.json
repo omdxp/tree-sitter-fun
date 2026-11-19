@@ -1549,8 +1549,8 @@
       ]
     },
     "pointer_type": {
-      "type": "PREC_LEFT",
-      "value": 0,
+      "type": "PREC",
+      "value": 14,
       "content": {
         "type": "SEQ",
         "members": [
@@ -3096,6 +3096,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "cast_expression"
+        },
+        {
+          "type": "SYMBOL",
           "name": "ternary_expression"
         },
         {
@@ -3666,7 +3670,7 @@
     },
     "unary_expression": {
       "type": "PREC",
-      "value": 14,
+      "value": 15,
       "content": {
         "type": "SEQ",
         "members": [
@@ -3710,9 +3714,38 @@
         ]
       }
     },
-    "await_expression": {
+    "cast_expression": {
       "type": "PREC",
       "value": 14,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "FIELD",
+            "name": "value",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_expression"
+            }
+          },
+          {
+            "type": "STRING",
+            "value": "as"
+          },
+          {
+            "type": "FIELD",
+            "name": "type",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_type"
+            }
+          }
+        ]
+      }
+    },
+    "await_expression": {
+      "type": "PREC",
+      "value": 15,
       "content": {
         "type": "SEQ",
         "members": [
@@ -3729,7 +3762,7 @@
     },
     "fork_expression": {
       "type": "PREC",
-      "value": 14,
+      "value": 15,
       "content": {
         "type": "SEQ",
         "members": [
@@ -3746,7 +3779,7 @@
     },
     "receive_expression": {
       "type": "PREC",
-      "value": 14,
+      "value": 15,
       "content": {
         "type": "SEQ",
         "members": [
@@ -4341,7 +4374,7 @@
     },
     "call_expression": {
       "type": "PREC",
-      "value": 16,
+      "value": 17,
       "content": {
         "type": "SEQ",
         "members": [
@@ -4369,7 +4402,7 @@
       "value": 1,
       "content": {
         "type": "PREC",
-        "value": 16,
+        "value": 17,
         "content": {
           "type": "SEQ",
           "members": [
@@ -4507,7 +4540,7 @@
     },
     "field_expression": {
       "type": "PREC",
-      "value": 15,
+      "value": 16,
       "content": {
         "type": "SEQ",
         "members": [
@@ -4552,7 +4585,7 @@
     },
     "index_expression": {
       "type": "PREC",
-      "value": 15,
+      "value": 16,
       "content": {
         "type": "SEQ",
         "members": [
@@ -4585,7 +4618,7 @@
     },
     "update_expression": {
       "type": "PREC",
-      "value": 15,
+      "value": 16,
       "content": {
         "type": "SEQ",
         "members": [
@@ -4615,7 +4648,7 @@
     },
     "propagate_expression": {
       "type": "PREC",
-      "value": 15,
+      "value": 16,
       "content": {
         "type": "SEQ",
         "members": [
@@ -4809,6 +4842,18 @@
     [
       "pointer_type",
       "binary_expression"
+    ],
+    [
+      "_type_name",
+      "qualified_type"
+    ],
+    [
+      "pointer_type",
+      "cast_expression"
+    ],
+    [
+      "_type",
+      "generic_type"
     ],
     [
       "array_type",
