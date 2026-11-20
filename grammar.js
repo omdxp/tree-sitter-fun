@@ -178,8 +178,9 @@ module.exports = grammar({
     compound_declaration: ($) =>
       seq(
         optional($.visibility),
+        optional($.alignment),
         optional("packed"),
-        "compound",
+        choice("compound", "union"),
         field("name", alias($.identifier, $.type_identifier)),
         optional(field("type_parameters", $.type_parameters)),
         field("body", $.field_list),
@@ -187,8 +188,12 @@ module.exports = grammar({
 
     field_list: ($) => seq("{", repeat($.field_declaration), "}"),
 
+    // `align(N)`: a declaration's own alignment in bytes.
+    alignment: ($) => seq("align", "(", field("bytes", $.number_literal), ")"),
+
     field_declaration: ($) =>
       seq(
+        optional($.alignment),
         field("type", $._type),
         field("name", $.identifier),
         optional(seq("=", $._expression)),
@@ -386,6 +391,7 @@ module.exports = grammar({
         1,
         seq(
           optional($.visibility),
+          optional($.alignment),
           field("type", $._type),
           field("name", $.identifier),
           optional(seq("=", field("value", $._expression))),

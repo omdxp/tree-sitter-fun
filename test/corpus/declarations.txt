@@ -230,3 +230,68 @@ fun poke(volatile u32* reg) {
         type: (primitive_type)
         name: (identifier)
         value: (number_literal)))))
+
+================================================================================
+Unions and alignment
+================================================================================
+
+union Value {
+  u32 bits;
+  f32 real;
+}
+
+align(64) packed union Line {
+  align(16) u8 tag;
+}
+
+align(4096) u8 page;
+
+fun f() {
+  num union = 1;
+  _ = s.union(t);
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (compound_declaration
+    name: (type_identifier)
+    body: (field_list
+      (field_declaration
+        type: (type_identifier)
+        name: (identifier))
+      (field_declaration
+        type: (primitive_type)
+        name: (identifier))))
+  (compound_declaration
+    (alignment
+      bytes: (number_literal))
+    name: (type_identifier)
+    body: (field_list
+      (field_declaration
+        (alignment
+          bytes: (number_literal))
+        type: (type_identifier)
+        name: (identifier))))
+  (variable_declaration
+    (alignment
+      bytes: (number_literal))
+    type: (type_identifier)
+    name: (identifier))
+  (function_declaration
+    name: (identifier)
+    parameters: (parameters)
+    body: (block
+      (variable_declaration
+        type: (primitive_type)
+        name: (identifier)
+        value: (number_literal))
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (call_expression
+            function: (field_expression
+              value: (identifier)
+              field: (identifier))
+            arguments: (arguments
+              (identifier))))))))

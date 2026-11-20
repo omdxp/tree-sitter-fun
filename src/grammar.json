@@ -691,6 +691,18 @@
           "type": "CHOICE",
           "members": [
             {
+              "type": "SYMBOL",
+              "name": "alignment"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
               "type": "STRING",
               "value": "packed"
             },
@@ -700,8 +712,17 @@
           ]
         },
         {
-          "type": "STRING",
-          "value": "compound"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "compound"
+            },
+            {
+              "type": "STRING",
+              "value": "union"
+            }
+          ]
         },
         {
           "type": "FIELD",
@@ -762,9 +783,46 @@
         }
       ]
     },
+    "alignment": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "align"
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "FIELD",
+          "name": "bytes",
+          "content": {
+            "type": "SYMBOL",
+            "name": "number_literal"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
     "field_declaration": {
       "type": "SEQ",
       "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "alignment"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
         {
           "type": "FIELD",
           "name": "type",
@@ -1901,6 +1959,18 @@
               {
                 "type": "SYMBOL",
                 "name": "visibility"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "alignment"
               },
               {
                 "type": "BLANK"

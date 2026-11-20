@@ -11,6 +11,8 @@
   "shape"
   "compound"
   "packed"
+  "union"
+  "align"
   "enum"
   "let"
   "const"
