@@ -10,6 +10,7 @@
   "impl"
   "shape"
   "compound"
+  "packed"
   "enum"
   "let"
   "const"

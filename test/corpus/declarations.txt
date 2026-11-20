@@ -190,3 +190,43 @@ fuzz "never crashes" (raw* data, num len) { }
         (primitive_type)
         (identifier)))
     (block)))
+
+================================================================================
+Packed compounds and volatile types
+================================================================================
+
+packed compound Entry {
+  u16 limit;
+  volatile u8 flags;
+}
+
+fun poke(volatile u32* reg) {
+  num packed = 1;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (compound_declaration
+    name: (type_identifier)
+    body: (field_list
+      (field_declaration
+        type: (type_identifier)
+        name: (identifier))
+      (field_declaration
+        type: (volatile_type
+          (type_identifier))
+        name: (identifier))))
+  (function_declaration
+    name: (identifier)
+    parameters: (parameters
+      (parameter
+        type: (volatile_type
+          (pointer_type
+            (type_identifier)))
+        name: (identifier)))
+    body: (block
+      (variable_declaration
+        type: (primitive_type)
+        name: (identifier)
+        value: (number_literal)))))

@@ -688,6 +688,18 @@
           ]
         },
         {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "packed"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
           "type": "STRING",
           "value": "compound"
         },
@@ -1390,8 +1402,29 @@
         {
           "type": "SYMBOL",
           "name": "closure_type"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "volatile_type"
         }
       ]
+    },
+    "volatile_type": {
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "volatile"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_type"
+          }
+        ]
+      }
     },
     "primitive_type": {
       "type": "TOKEN",

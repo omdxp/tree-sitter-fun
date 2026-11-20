@@ -178,6 +178,7 @@ module.exports = grammar({
     compound_declaration: ($) =>
       seq(
         optional($.visibility),
+        optional("packed"),
         "compound",
         field("name", alias($.identifier, $.type_identifier)),
         optional(field("type_parameters", $.type_parameters)),
@@ -281,7 +282,11 @@ module.exports = grammar({
         $.tuple_type,
         $.function_type,
         $.closure_type,
+        $.volatile_type,
       ),
+
+    // `volatile T`: every access through it reaches memory.
+    volatile_type: ($) => prec.right(seq("volatile", $._type)),
 
     primitive_type: () =>
       token(
