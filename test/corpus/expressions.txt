@@ -225,6 +225,9 @@ fun main() {
   closure() num c = fun() num {
     ret 42;
   };
+  closure(num, str) num add = fun(num a, str s) num {
+    ret a;
+  };
 }
 
 ----------------------------------------
@@ -241,6 +244,7 @@ fun main() {
           (identifier)
           (arguments
             (closure_expression
+              (parameters)
               (block
                 (expression_statement
                   (call_expression
@@ -254,10 +258,29 @@ fun main() {
           (primitive_type))
         (identifier)
         (closure_expression
+          (parameters)
           (primitive_type)
           (block
             (return_statement
-              (number_literal))))))))
+              (number_literal)))))
+      (variable_declaration
+        (closure_type
+          (primitive_type)
+          (primitive_type)
+          (primitive_type))
+        (identifier)
+        (closure_expression
+          (parameters
+            (parameter
+              (primitive_type)
+              (identifier))
+            (parameter
+              (primitive_type)
+              (identifier)))
+          (primitive_type)
+          (block
+            (return_statement
+              (identifier))))))))
 
 ==================
 ternary

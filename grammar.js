@@ -51,6 +51,7 @@ module.exports = grammar({
     [$._type_name, $.qualified_type, $.variant_pattern, $._expression],
     [$.binary_expression, $.generic_call_expression],
     [$.destructure_names, $._expression],
+    [$.parameters, $.function_type],
     [$.receive_expression, $.binary_expression, $.generic_call_expression],
     [$.fork_expression, $.binary_expression, $.generic_call_expression],
     [$.await_expression, $.binary_expression, $.generic_call_expression],
@@ -353,6 +354,7 @@ module.exports = grammar({
         seq(
           "closure",
           "(",
+          commaSep($._type),
           ")",
           optional(field("return_type", $._type)),
         ),
@@ -477,7 +479,7 @@ module.exports = grammar({
           "for",
           field("index", $.identifier),
           ",",
-          field("item", $.identifier),
+          field("item", choice($.identifier, $.destructure_names)),
           "::",
           field("iterable", $._expression),
           field("body", $.block),
@@ -779,8 +781,7 @@ module.exports = grammar({
     closure_expression: ($) =>
       seq(
         "fun",
-        "(",
-        ")",
+        field("parameters", $.parameters),
         optional(field("return_type", $._type)),
         field("body", $.block),
       ),

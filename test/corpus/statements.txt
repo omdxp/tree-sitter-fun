@@ -61,6 +61,7 @@ fun main() {
   for item : items { }
   for i, item :: items { }
   for (a, b) : pairs { }
+  for i, (a, b) :: pairs { }
 }
 
 ----------------------------------------
@@ -114,6 +115,13 @@ fun main() {
         (identifier)
         (block))
       (for_statement
+        (destructure_names
+          (identifier)
+          (identifier))
+        (identifier)
+        (block))
+      (for_statement
+        (identifier)
         (destructure_names
           (identifier)
           (identifier))
