@@ -781,10 +781,14 @@ module.exports = grammar({
     closure_expression: ($) =>
       seq(
         "fun",
+        optional(field("captures", $.capture_list)),
         field("parameters", $.parameters),
         optional(field("return_type", $._type)),
         field("body", $.block),
       ),
+
+    capture_list: ($) =>
+      seq("[", commaSep1(seq("&", $.identifier)), "]"),
 
     arguments: ($) =>
       seq("(", optional(seq(commaSep1($._expression), optional(","))), ")"),

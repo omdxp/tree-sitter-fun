@@ -228,6 +228,9 @@ fun main() {
   closure(num, str) num add = fun(num a, str s) num {
     ret a;
   };
+  let both = fun[&a, &b](num d) {
+    a = a + d;
+  };
 }
 
 ----------------------------------------
@@ -280,7 +283,24 @@ fun main() {
           (primitive_type)
           (block
             (return_statement
-              (identifier))))))))
+              (identifier)))))
+      (let_declaration
+        (identifier)
+        (closure_expression
+          (capture_list
+            (identifier)
+            (identifier))
+          (parameters
+            (parameter
+              (primitive_type)
+              (identifier)))
+          (block
+            (expression_statement
+              (assignment_expression
+                (identifier)
+                (binary_expression
+                  (identifier)
+                  (identifier))))))))))
 
 ==================
 ternary
